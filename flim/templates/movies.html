@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block start %} 
+
+<div class="container mt-5">
+    <form class ="col-3 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h2>Add Movie</h2>
+        <hr>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Movie Name</label>
+          <input name="movie_name" required type="text" class="form-control" >
+          </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Movie Details</label>
+            <textarea name="movie_details" class="form-control" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Movie Image</label>
+            <input name="movie_image" type="file" class="form-control" >
+            </div>
+        <button type="submit" class="btn btn-success">Add Movie</button>
+      </form>
+
+      <form>
+      <div class="mt-3">
+        <div class="mx-auto col-3">
+            
+
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Search Movie</label>
+                <input name="search"  type="text" class="form-control" >
+                </div>   
+                <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+
+       
+      </div>
+      </form>
+      
+
+      
+      <table class="table mt-3">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Movie Name</th>
+            <th scope="col">Movie Details</th>
+            <th scope="col">Image</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+            {%for movie in movies %}
+            <tr>
+             <th scope="row">{{forloop.counter}}</th>
+             <td>{{movie.movie_name}}</td>
+             <td>{{movie.movie_details}}</td>
+             <td>
+                <img src="/media/{{movie.movie_image}}" style="height : 50px">
+            </td>
+            <td>
+                <a href="/delete-movie/{{movie.id}}" class="btn btn-danger m-2">Delete</a>
+                <a href="/update-movie/{{movie.id}}" class="btn btn-success">Update</a>
+            </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table> 
+</div>
+    
+{% endblock %}
